@@ -14,7 +14,10 @@ import "leaflet/dist/leaflet.css";
 
 import './Map.css'
 import LocationService, { LatLng, LngLat, Place } from "../../services/LocationService";
-import { Box, Button, Divider, List, ListItem, ListItemText, TextField, TextareaAutosize } from "@mui/material";
+import { Box, Divider, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Icon, Input } from "@vechaiui/react"
+import { Home, Search, XCircle, MapPin, Navigation } from 'react-feather';
+
 
 interface Position {
   latitude: number;
@@ -60,22 +63,6 @@ const ResetCenterView: React.FC<{position: [number, number] | null}> = ({positio
 
   return null;
 }
-
-// const RouteMap: React.FC<{routePoints: Array<LatLng>}> = ({routePoints}) => {
-//   const [routeCoordinates, setRouteCoordinates] = useState<number[]>([])
-  
-//   useEffect(() => {
-//     const getRoute = async () => {
-//       const coordinates = await LocationService.calculateRoute(routePoints);
-//       setRouteCoordinates(coordinates);
-//     };
-//     getRoute();
-//   }, [routePoints]);
-
-//   return (
-//     <Polyline positions={routeCoordinates} color="blue" />
-//   );
-// }
 
 const OpenStreetMap: React.FC = () => {
   const [userLocation, setUserLocation] = useState<Position | null>({latitude:50.45007183381818, longitude:30.524225234985355});
@@ -141,86 +128,141 @@ const OpenStreetMap: React.FC = () => {
   const center: [number, number] = [userLocation!.latitude, userLocation!.longitude]
 
   return (
-    <Box className="map">
-        <Box className="sidebar">
-          <div className="container">
-            <Button variant="contained" onClick={() => setLocateUser(!locateUser)}>Home</Button>
+    <Box className="map flex-col md:flex-row">
+        <Box className="sidebar p-3 items-center">
+          <div className="container flex items-center justify-center">
+            <Button 
+              variant="solid" 
+              onClick={() => setLocateUser(!locateUser)}
+              leftIcon={<Icon as={Home} label="home" className="w-4 h-4 ml-1" />}
+              >
+                Home
+            </Button>
           </div>
 
 
 {/* search place */}
-
-
-          <div className="container">
-            <div className="search-box">
-              <TextField id="outlined-basic" label="Type a place" variant="outlined" value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
-              <Button variant="contained" onClick={ async () => {await handleSearchPlace()}}>Find</Button>
+          <div className="m-3 w-full flex flex-col items-center">
+            <div className="w-full font-bold text-center m-2">
+              Search for a place
             </div>
-
-            {showSearchResults && (
-            <div>
-              <List className="search-results"  component={"nav"} aria-label="mailbox folders">
-              {places.map((item) => {
-                return (
-                  <ListItem key={item?.place_id} onClick={() => setSearchPosition([item?.lat, item?.lon])}>
-                    <ListItemText primary={item?.display_name} />
-                    <Divider variant="middle" />
-                  </ListItem>
-                );
-              })}
-              </List>
-              <Button variant="contained" onClick={() => setShowSearchResults(false)}>CLOSE</Button>
+            <div className="container">
+              <div className="search-box flex-col md:flex-row ">
+                <Input className="mb-1 md:mr-1" placeholder="Type a place" value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
+                <Button 
+                  variant="solid" 
+                  onClick={ async () => {await handleSearchPlace()}}
+                  leftIcon={<Icon as={Search} label="search" className="w-4 h-4 ml-1" />}
+                  >
+                    Find
+                </Button>
               </div>
-            )}
+
+              {showSearchResults && (
+              <div className="flex flex-col items-center justify-center">
+                <div className="search-results items-center">
+                {places.map((item) => {
+                  return (
+                    <div className="flex items-center m-2 p-1 border-solid border-2 border-grey-500 rounded-md" key={item?.place_id} onClick={() => setSearchPosition([item?.lat, item?.lon])}>
+                      <div>
+                        <Icon as={MapPin} label="map pin" className="w-6 h-6 mx-3 text-grey-500" />
+                      </div>
+                      <div>
+                        {item?.display_name}
+                      </div>
+                    </div>
+                  );
+                })}
+                </div>
+                <Button 
+                  variant="solid" 
+                  onClick={() => setShowSearchResults(false)}
+                  leftIcon={<Icon as={XCircle} label="close" className="w-4 h-4 mr-1" />}
+                  >
+                    Close
+                </Button>              
+              </div>
+              )}
+            </div>
           </div>
 
 
 {/* routes */}
-
-
-          <div className="container">
-            {routePointTexts.length > 0 && <List className="search-results"  component={"nav"} aria-label="mailbox folders">
-              {routePointTexts.map((item, index) => (
-                <ListItem key={index}>
-                  <ListItemText primary={item?.display_name} />
-                  <Divider variant="middle" />
-                </ListItem>
-              ))}
-            </List>
-            }
-
-            <div className="search-box">
-              <TextField id="outlined-basic" label="Type a place" variant="outlined" value={routePointsSearchText} onChange={(e) => setRoutePointsSearchText(e.target.value)}/>
-              <Button variant="contained" onClick={ async () => {await handleSearchRoutePointPlace()}}>Find</Button>
+          <div className="m-3 w-full flex flex-col items-center">
+            <div className="w-full font-bold text-center m-2">
+              Build a route
             </div>
 
-            {showRoutePointsSearchResult && (
+            <div className="container flex flex-col">
+              {routePointTexts.length > 0 && 
               <div>
-                <List className="search-results"  component={"nav"} aria-label="mailbox folders">
-                {routePointSearchResults.map((item) =>
-                  (
-                    <ListItem key={item?.place_id} onClick={() => handleRoutePointSet(item)}>
-                      <ListItemText primary={item?.display_name} />
-                      <Divider variant="middle" />
-                    </ListItem>
-                  )
-                )}
-                </List>
-                <Button variant="contained" onClick={() => setShowRoutePointsSearchResult(false)}>CLOSE</Button>
+                <div className="flex items-center justify-center">
+                  <div className="text-center font-medium">
+                    Your route:
+                  </div>
+                </div>
+                <div className="search-results items-center">
+                  {routePointTexts.map((item, index) => (
+                      <div className="flex items-center m-2 p-1 border-solid border-2 border-grey-500 rounded-md" key={item?.place_id}>
+                      <div>
+                        <Icon as={Navigation} label="navigation point" className="w-6 h-6 mx-3 text-grey-500" />
+                      </div>
+                      <div>
+                        {item?.display_name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            )}
+              }
 
-            {routePoints.length > 0 && 
-                <Button variant="contained" onClick={async () => await CalculateRoute()}>GetRoute</Button>
-            }
+              <div className="search-box flex-col md:flex-row">
+                <Input className="mb-1 md:mr-1" placeholder="Type a place" value={routePointsSearchText} onChange={(e) => setRoutePointsSearchText(e.target.value)}/>
+                <Button 
+                  variant="solid" 
+                  onClick={ async () => {await handleSearchRoutePointPlace()}}
+                  leftIcon={<Icon as={Search} label="search" className="w-4 h-4 ml-1" />}
+                  >
+                    Find
+                </Button>              </div>
+
+              {showRoutePointsSearchResult && (
+                <div className="flex flex-col items-center justify-center my-1">                  
+                  <div className="search-results items-center">
+                    {routePointSearchResults.map((item) =>
+                      (
+                        <div className="flex items-center m-2 p-1 border-solid border-2 border-grey-500 rounded-md" key={item?.place_id} 
+                          onClick={() => handleRoutePointSet(item)}>
+                          <div>
+                            <Icon as={MapPin} label="map pin" className="w-6 h-6 mx-3 text-grey-500" />
+                          </div>
+                          <div>
+                            {item?.display_name}
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                  <Button 
+                    variant="solid" 
+                    onClick={() => setShowRoutePointsSearchResult(false)}
+                    leftIcon={<Icon as={XCircle} label="close" className="w-4 h-4 mr-1" />}
+                    > 
+                      Close
+                  </Button>
+                </div>
+              )}
+
+              {routePoints.length > 0 && 
+                  <Button variant="solid" onClick={async () => await CalculateRoute()}>Get route</Button>
+              }
+            </div>
           </div>
 
         </Box>
 
 
 {/* map */}
-
-
         <MapContainer
           center={center}
           zoom={15}
