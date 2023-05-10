@@ -49,7 +49,7 @@ func (h *authHandlers) SignUp() gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusCreated, gin.H{"status": "success", "data": gin.H{"user": models.FilteredResponse(newUser)}})
+		c.JSON(http.StatusCreated, gin.H{"status": "success", "data": gin.H{"user": models.UserFilteredResponse(newUser)}})
 
 	}
 }
@@ -147,9 +147,9 @@ func (a *authHandlers) LogOut() gin.HandlerFunc {
 
 func (a *authHandlers) GetMe() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		currentUser := c.MustGet("currentUser").(*models.DBResponse)
+		currentUser := c.MustGet("currentUser").(*models.UserDBResponse)
 
-		c.JSON(http.StatusOK, gin.H{"status": "success", "data": gin.H{"user": models.FilteredResponse(currentUser)}})
+		c.JSON(http.StatusOK, gin.H{"status": "success", "data": gin.H{"user": models.UserFilteredResponse(currentUser)}})
 	}
 }
 

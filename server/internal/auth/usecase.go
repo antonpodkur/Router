@@ -5,8 +5,8 @@ import (
 )
 
 type Usecase interface {
-	SignUp(*models.SignUpInput) (*models.DBResponse, error)
-	SignIn(input *models.SignInInput) (*models.DBResponse, error)
-	GetUserById(string) (*models.DBResponse, error)
-	GetUserByEmail(string) (*models.DBResponse, error)
+	SignUp(*models.SignUpInput) (*models.UserDBResponse, error)
+	SignIn(input *models.SignInInput) (*models.UserDBResponse, error)
+	GetUserById(string) (*models.UserDBResponse, error)
+	GetUserByEmail(string) (*models.UserDBResponse, error)
 }

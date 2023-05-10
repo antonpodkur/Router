@@ -5,19 +5,6 @@ import (
 	"time"
 )
 
-type User struct {
-	ID           primitive.ObjectID `bson:"_id"`
-	FirstName    string             `json:"first_name" validate:"required,min=2,max=100"`
-	LastName     string             `json:"last_name" validate:"required,min=2,max=100"`
-	Password     string             `json:"password" validate:"required,min=6"`
-	Email        string             `json:"email" validate:"required,email"`
-	Token        string             `json:"token"`
-	RefreshToken string             `json:"refresh_token"`
-	CreatedAt    time.Time          `json:"created_at"`
-	UpdatedAt    time.Time          `json:"updated_at"`
-	UserId       string             `json:"user_id"`
-}
-
 type SignUpInput struct {
 	Name            string    `json:"name" bson:"name" binding:"required"`
 	Email           string    `json:"email" bson:"email" binding:"required"`
@@ -34,7 +21,7 @@ type SignInInput struct {
 	Password string `json:"password" bson:"password" binding:"required"`
 }
 
-type DBResponse struct {
+type UserDBResponse struct {
 	ID              primitive.ObjectID `json:"id" bson:"_id"`
 	Name            string             `json:"name" bson:"name"`
 	Email           string             `json:"email" bson:"email"`
@@ -55,7 +42,7 @@ type UserResponse struct {
 	UpdatedAt time.Time          `json:"updated_at" bson:"updated_at"`
 }
 
-func FilteredResponse(user *DBResponse) UserResponse {
+func UserFilteredResponse(user *UserDBResponse) UserResponse {
 	return UserResponse{
 		ID:        user.ID,
 		Email:     user.Email,

@@ -30,7 +30,7 @@ func NewAuthUsecase(cfg *config.Config, mongoClient *mongo.Client, ctx context.C
 	}
 }
 
-func (u *authUsecase) SignUp(user *models.SignUpInput) (*models.DBResponse, error) {
+func (u *authUsecase) SignUp(user *models.SignUpInput) (*models.UserDBResponse, error) {
 	usersCollection := db.OpenCollection(u.mongoClient, "users")
 
 	user.CreatedAt = time.Now()
@@ -59,7 +59,7 @@ func (u *authUsecase) SignUp(user *models.SignUpInput) (*models.DBResponse, erro
 		return nil, errors.New("could not create index for email")
 	}
 
-	var newUser *models.DBResponse
+	var newUser *models.UserDBResponse
 	query := bson.M{"_id": res.InsertedID}
 
 	err = usersCollection.FindOne(u.ctx, query).Decode(&newUser)
@@ -70,23 +70,23 @@ func (u *authUsecase) SignUp(user *models.SignUpInput) (*models.DBResponse, erro
 	return newUser, nil
 }
 
-func (u *authUsecase) SignIn(input *models.SignInInput) (*models.DBResponse, error) {
+func (u *authUsecase) SignIn(input *models.SignInInput) (*models.UserDBResponse, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (u *authUsecase) GetUserById(id string) (*models.DBResponse, error) {
+func (u *authUsecase) GetUserById(id string) (*models.UserDBResponse, error) {
 	usersCollection := db.OpenCollection(u.mongoClient, "users")
 	oid, _ := primitive.ObjectIDFromHex(id)
 
-	var user *models.DBResponse
+	var user *models.UserDBResponse
 
 	query := bson.M{"_id": oid}
 	err := usersCollection.FindOne(u.ctx, query).Decode(&user)
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return &models.DBResponse{}, err
+			return &models.UserDBResponse{}, err
 		}
 		return nil, err
 	}
@@ -94,16 +94,16 @@ func (u *authUsecase) GetUserById(id string) (*models.DBResponse, error) {
 	return user, nil
 }
 
-func (u *authUsecase) GetUserByEmail(email string) (*models.DBResponse, error) {
+func (u *authUsecase) GetUserByEmail(email string) (*models.UserDBResponse, error) {
 	usersCollection := db.OpenCollection(u.mongoClient, "users")
-	var user *models.DBResponse
+	var user *models.UserDBResponse
 
 	query := bson.M{"email": strings.ToLower(email)}
 	err := usersCollection.FindOne(u.ctx, query).Decode(&user)
 
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return &models.DBResponse{}, err
+			return &models.UserDBResponse{}, err
 		}
 		return nil, err
 	}
