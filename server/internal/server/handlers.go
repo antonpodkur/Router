@@ -7,11 +7,18 @@ import (
 	"github.com/antonpodkur/Router/internal/middleware"
 	routeDelivery "github.com/antonpodkur/Router/internal/route/delivery"
 	routeUC "github.com/antonpodkur/Router/internal/route/usecase"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func (s *Server) MapHandlers(engine *gin.Engine) error {
 	ctx := context.TODO()
+
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = []string{"http://localhost:5173"}
+	corsConfig.AllowCredentials = true
+
+	engine.Use(cors.New(corsConfig))
 
 	// init usecases
 	authUsecase := authUC.NewAuthUsecase(s.cfg, s.db, ctx)

@@ -6,17 +6,25 @@ import OpenStreetMap from './pages/Map/Map'
 import { VechaiProvider } from '@vechaiui/react'
 import {Theme} from './Themes'
 
+import store from './app/store'
+import { Provider } from 'react-redux'
+import { Layout } from 'react-feather'
+import Login from './pages/Login'
+
 function App() {
 
   return (
     <VechaiProvider theme={Theme} colorScheme='mac-light'>
-      <BrowserRouter> 
-        <Routes>
-          <Route path='/' element={<Welcome/>}/>
-          <Route path='/map' element={<OpenStreetMap />} />
-          <Route path='*' element={<NotFound/>} />
-        </Routes>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter> 
+          <Routes>
+            <Route path='/' element={<Welcome/>}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/map' element={<OpenStreetMap />} />
+            <Route path='*' element={<NotFound/>} />
+          </Routes>
+        </BrowserRouter>
+      </Provider>
     </VechaiProvider>
   )
 }
