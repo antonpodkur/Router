@@ -13,9 +13,6 @@ interface FormData {
 }
 
 const Login: React.FC<{}> = () => {
-    const emailRef = useRef<HTMLInputElement>(null)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [errMsg, setErrMsg] = useState('')
     const navigate = useNavigate()
     
@@ -23,21 +20,16 @@ const Login: React.FC<{}> = () => {
     const [showPassword, setShowPassword] = useState(false)
     const handleToggleShowPassword = () => setShowPassword(!showPassword)
   
-    const { register, formState: { errors }, handleSubmit } = useForm<FormData>(); 
+    const { register, formState: { errors }, handleSubmit, watch } = useForm<FormData>(); 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        if (emailRef.current) {
-             emailRef.current.focus()
-        }
-    }, [])
+    const watchedEmail = watch("email");
+    const watchedPassword = watch("password");
+
 
     useEffect(() => {
         setErrMsg('')
-    },[email, password])
-
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)
+    },[watchedEmail, watchedPassword])
 
     const onSubmit = async(data: FormData) => {
         try {
@@ -69,10 +61,8 @@ const Login: React.FC<{}> = () => {
               Email<RequiredIndicator />
             </FormLabel>
             <Input 
-                ref={emailRef}
                 {...register("email", { required: true })} 
                 placeholder="Enter your email." 
-                onChange={handleEmailChange}
             />
             {errors.email && errors.email.type === "required" && <FormErrorMessage>Email is required</FormErrorMessage>}
           </FormControl>
@@ -87,7 +77,6 @@ const Login: React.FC<{}> = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter password"
                 {...register("password", { required: true })}
-                onChange={handlePasswordChange}
               />
               <Input.RightElement className="w-16">
                 <Button type="button" size="xs" variant="solid" onClick={handleToggleShowPassword}>
