@@ -2,10 +2,12 @@ import { useRef, useState, useEffect, ChangeEvent } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { useDispatch } from "react-redux"
-import { setLoggedIn } from "../features/auth/authSlice"
-import { useSignInMutation } from "../features/auth/authApiSlice"
+import { setLoggedIn, setUser } from "../features/auth/authSlice"
+import { useMeQuery, useSignInMutation } from "../features/auth/authApiSlice"
 import { useForm } from "react-hook-form"
 import { FormControl, FormLabel, RequiredIndicator, Input, FormErrorMessage, Button } from "@vechaiui/react"
+import { User } from "../models/user"
+import { MeQuerySuccessResult } from "../app/api/queries"
 
 interface FormData {
     email: string
@@ -36,6 +38,14 @@ const Login: React.FC<{}> = () => {
             const result = await signIn({email: data.email, password: data.password}).unwrap()
             console.log(result)
             if (result.status === 'success') {
+                // const { data: userData } = useMeQuery(null)
+                // console.log(userData)
+                // console.log(userData === null)
+                // console.log('I am here')
+                // if (userData?.data.user === null) {
+                //     console.log('user is null')
+                // }
+                // dispatch(setUser(userData?.data.user!))
                 dispatch(setLoggedIn({}))
                 navigate('/')
             }

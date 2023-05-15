@@ -14,9 +14,10 @@ import "leaflet/dist/leaflet.css";
 
 import './Map.css'
 import LocationService, { LatLng, LngLat, Place } from "../../services/LocationService";
-import { Box, Divider, List, ListItem, ListItemText } from "@mui/material";
-import { Button, Icon, Input } from "@vechaiui/react"
+import { Box, List, ListItem, ListItemText } from "@mui/material";
+import { Button, Icon, Input, Divider } from "@vechaiui/react"
 import { Home, Search, XCircle, MapPin, Navigation } from 'react-feather';
+import RouteOptions from "../../components/RouteOptions/RouteOptions";
 
 
 interface Position {
@@ -123,26 +124,42 @@ const OpenStreetMap: React.FC = () => {
     console.log(route);
     const coords = route.map(coord => [coord[1], coord[0]] as LatLngExpression);
     setRouteCoords(coords);
+    console.log(coords)
+  }
+
+  const deleteRoute = () => {
+    setRoutePoints([])
+    setRoutePointTexts([])
+    setShowRoutePointsSearchResult(false)
+    setRoutePointsSearchText('') 
+    setRoutePointSearchResults([])
+    setRouteCoords([])
   }
 
   const center: [number, number] = [userLocation!.latitude, userLocation!.longitude]
 
+  //TODO: move everything to vechai ui
   return (
     <Box className="map flex-col md:flex-row">
-        <Box className="sidebar p-3 items-center">
-          <div className="container flex items-center justify-center">
+        <Box className="sidebar max-h-[50vh] md:max-h-[100vh] overflow-y-auto p-3 items-center">
+          <div className="container w-full flex flex-col items-center justify-center">
             <Button 
               variant="solid" 
               onClick={() => setLocateUser(!locateUser)}
-              leftIcon={<Icon as={Home} label="home" className="w-4 h-4 ml-1" />}
+              leftIcon={<Icon as={Home} label="home" className="w-4 h-4 mr-1" />}
+              className="mb-2"
               >
                 Home
             </Button>
+            <Divider
+              orientation="horizontal"
+              className="border-neutral-300 w-full dark:border-neutral-700"
+            />
           </div>
 
 
 {/* search place */}
-          <div className="m-3 w-full flex flex-col items-center">
+          <div className="m-3 w-full flex flex-col items-center w-full">
             <div className="w-full font-bold text-center m-2">
               Search for a place
             </div>
@@ -152,7 +169,7 @@ const OpenStreetMap: React.FC = () => {
                 <Button 
                   variant="solid" 
                   onClick={ async () => {await handleSearchPlace()}}
-                  leftIcon={<Icon as={Search} label="search" className="w-4 h-4 ml-1" />}
+                  leftIcon={<Icon as={Search} label="search" className="w-4 h-4 mr-1" />}
                   >
                     Find
                 </Button>
@@ -184,6 +201,10 @@ const OpenStreetMap: React.FC = () => {
               </div>
               )}
             </div>
+            <Divider
+              orientation="horizontal"
+              className="border-neutral-300 w-full dark:border-neutral-700"
+            />
           </div>
 
 
@@ -213,6 +234,7 @@ const OpenStreetMap: React.FC = () => {
                     </div>
                   ))}
                 </div>
+                {routeCoords.length > 0 && <RouteOptions coords={routeCoords} points={routePoints} deleteRoute={deleteRoute}/>}
               </div>
               }
 
@@ -221,7 +243,7 @@ const OpenStreetMap: React.FC = () => {
                 <Button 
                   variant="solid" 
                   onClick={ async () => {await handleSearchRoutePointPlace()}}
-                  leftIcon={<Icon as={Search} label="search" className="w-4 h-4 ml-1" />}
+                  leftIcon={<Icon as={Search} label="search" className="w-4 h-4 mr-1" />}
                   >
                     Find
                 </Button>              </div>

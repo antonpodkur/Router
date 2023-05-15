@@ -33,7 +33,6 @@
 }
 
 .search-results {
-    margin: 15px;
     max-height: 300px;
     overflow: auto;
 }
