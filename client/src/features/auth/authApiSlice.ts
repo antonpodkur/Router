@@ -32,3 +32,5 @@ export const {
     useSignUpMutation,
     useMeQuery
 } = authApiSlice
+
+export default authApiSlice

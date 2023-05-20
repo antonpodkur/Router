@@ -11,7 +11,7 @@ import {
   cx,
 } from "@vechaiui/react";
 import { Trash2, XCircle } from "react-feather";
-import React, { useRef } from "react";
+import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 interface DeleteRouteModalProps {
