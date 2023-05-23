@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie"
 import { useDispatch } from "react-redux"
 import { selectUser, setLoggedIn, setUser } from "../features/auth/authSlice"
 import { useSelector } from "react-redux"
-import axios from "../app/api/axios"
+import { axiosPrivate } from "../app/api/axios"
 import { MeQuerySuccessResult } from "../app/api/queries"
 import { User } from "../models/user"
 
@@ -18,7 +18,7 @@ const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
 
   useEffect(() => {
     const getUser = async (): Promise<User> => {
-      const user = (await axios.get<MeQuerySuccessResult>('/api/v1/auth/me')).data.data.user
+      const user = (await axiosPrivate.get<MeQuerySuccessResult>('/api/v1/auth/me')).data.data.user
       return user
     }
 

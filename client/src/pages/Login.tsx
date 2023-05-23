@@ -9,7 +9,7 @@ import { FormControl, FormLabel, RequiredIndicator, Input, FormErrorMessage, But
 import { User } from "../models/user"
 import { MeQuerySuccessResult } from "../app/api/queries"
 import { apiSlice } from "../app/api/apiSlice"
-import axios from "../app/api/axios"
+import { axiosPrivate } from "../app/api/axios"
 
 interface FormData {
   email: string
@@ -41,7 +41,7 @@ const Login: React.FC<{}> = () => {
       console.log(result)
       if (result.status === 'success') {
         dispatch(setLoggedIn({}))
-        const userResult = (await axios.get<MeQuerySuccessResult>('/api/v1/auth/me')).data;
+        const userResult = (await axiosPrivate.get<MeQuerySuccessResult>('/api/v1/auth/me')).data;
         dispatch(setUser(userResult.data.user))
         navigate('/')
       }
