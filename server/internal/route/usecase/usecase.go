@@ -82,6 +82,7 @@ func (u *routeUsecase) GetByName(name string) (*models.Route, error) {
 
 func (u *routeUsecase) Save(route *models.Route) (*models.Route, error) {
 	routesCollection := db.OpenCollection(u.mongoClient, "routes")
+	route.ID = primitive.NewObjectID()
 	res, err := routesCollection.InsertOne(u.ctx, route)
 	if err != nil {
 		if er, ok := err.(mongo.WriteException); ok && er.WriteErrors[0].Code == 11000 {

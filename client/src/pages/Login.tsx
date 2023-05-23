@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form"
 import { FormControl, FormLabel, RequiredIndicator, Input, FormErrorMessage, Button } from "@vechaiui/react"
 import { User } from "../models/user"
 import { MeQuerySuccessResult } from "../app/api/queries"
+import { apiSlice } from "../app/api/apiSlice"
+import { axiosPrivate } from "../app/api/axios"
 
 interface FormData {
   email: string
@@ -39,6 +41,8 @@ const Login: React.FC<{}> = () => {
       console.log(result)
       if (result.status === 'success') {
         dispatch(setLoggedIn({}))
+        const userResult = (await axiosPrivate.get<MeQuerySuccessResult>('/api/v1/auth/me')).data;
+        dispatch(setUser(userResult.data.user))
         navigate('/')
       }
       else if (result.status === 'fail') {

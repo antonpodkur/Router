@@ -1,9 +1,14 @@
 import { LatLngExpression } from "leaflet";
 import { LngLat } from "../../services/LocationService";
-import { Button, Divider, FormControl, FormLabel, Icon, Input, XIcon, cx } from "@vechaiui/react";
+import { Button, Divider, FormControl, FormErrorMessage, FormLabel, Icon, Input, RequiredIndicator, XIcon, cx } from "@vechaiui/react";
 import { Save, XCircle } from "react-feather";
-import React, { useRef } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/auth/authSlice";
+import { useForm } from "react-hook-form";
+import { Route } from "../../models/route";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 interface SaveRouteModalProps {
   coords: Array<LatLngExpression>;
@@ -20,8 +25,54 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
 }) => {
 
   const inputRef = useRef(null)
+  const [name, setName] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const user = useSelector(selectUser)
+  const axiosPrivate = useAxiosPrivate()
+
+  useEffect(() => {
+    setErrMsg('')
+  }, [name])
+
 
   const handleClose = () => setShow(false)
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)
+  const handleSave = async () => {
+    console.log(user)
+
+    if (name === '') {
+      setErrMsg('Name is required')
+      return
+    }
+
+    if (user === null) {
+      setErrMsg('To perform this action you have to be logged in')
+      return
+    }
+
+    console.log(points)
+
+    const route: Route = {
+      id: null,
+      name: name,
+      points: points as Array<Array<string>>,
+      coordinates: coords as Array<Array<number>>,
+      createdAt: new Date(),
+      userId: user!.id
+    }
+
+    try {
+      const result = await axiosPrivate.post('/api/v1/route/', {
+        name: route.name,
+        points: route.points,
+        coordinates: route.coordinates,
+        created_at: route.createdAt,
+        user_id: route.userId
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <Transition show={show} as={React.Fragment}>
@@ -65,8 +116,15 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
             />
             <div className="flex-1 px-3 py-2">
               <FormControl id="name">
-                <FormLabel>Route name:</FormLabel>
-                <Input ref={inputRef} color="red" />
+                <FormLabel>
+                  Route name:<RequiredIndicator />
+                </FormLabel>
+                <Input
+                  color="red"
+                  placeholder="Enter route name"
+                  onChange={handleNameChange}
+                />
+                {errMsg !== '' && <FormErrorMessage>{errMsg}</FormErrorMessage>}
               </FormControl>
             </div>
             <Divider
@@ -87,7 +145,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
                 color="primary"
                 leftIcon={<Icon as={Save} label="save" className="w-4 h-4 mr-1" />}
                 className="mr-2"
-                onClick={handleClose}
+                onClick={handleSave}
               >
                 Save
               </Button>
