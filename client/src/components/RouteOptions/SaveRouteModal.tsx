@@ -55,7 +55,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
     const route: Route = {
       id: null,
       name: name,
-      points: points,
+      points: points as Array<Array<string>>,
       coordinates: coords as Array<Array<number>>,
       createdAt: new Date(),
       userId: user!.id
