@@ -4,27 +4,29 @@ import Welcome from './pages/Welcome'
 import NotFound from './pages/NotFound'
 import OpenStreetMap from './pages/Map/Map'
 import { VechaiProvider } from '@vechaiui/react'
-import {Theme} from './Themes'
+import { Theme } from './Themes'
 
 import store from './app/store'
 import { Provider } from 'react-redux'
 import Login from './pages/Login'
 import AuthMiddleware from './components/AuthMiddleware'
 import Register from './pages/Register'
+import NavBar from './components/NavBar'
 
 function App() {
 
   return (
-    <VechaiProvider theme={Theme} colorScheme='mac-light'>
+    <VechaiProvider theme={Theme} colorScheme='emerald-light'>
       <Provider store={store}>
         <AuthMiddleware>
-          <BrowserRouter> 
+          <BrowserRouter>
+          <NavBar></NavBar>
             <Routes>
-              <Route path='/' element={<Welcome/>}/>
-              <Route path='/login' element={<Login/>}/>
-              <Route path='/register' element={<Register/>}/>
+              <Route path='/' element={<Welcome />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/register' element={<Register />} />
               <Route path='/map' element={<OpenStreetMap />} />
-              <Route path='*' element={<NotFound/>} />
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </AuthMiddleware>

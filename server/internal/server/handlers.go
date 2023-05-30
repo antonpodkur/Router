@@ -15,7 +15,7 @@ func (s *Server) MapHandlers(engine *gin.Engine) error {
 	ctx := context.TODO()
 
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://localhost:5173"}
+	corsConfig.AllowOrigins = []string{"http://localhost:5173", "http://localhost:5174"}
 	corsConfig.AllowCredentials = true
 
 	engine.Use(cors.New(corsConfig))
