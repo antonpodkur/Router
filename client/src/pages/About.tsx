@@ -77,7 +77,7 @@ const About: React.FC = () => {
           Contact Us
         </div>
         <div className="text-slate-600 text-md lg:text-lg m-6">
-            Email: anton.podkur@gmail.com
+            anton.podkur@gmail.com
         </div>
       </div>
     </div>

@@ -61,8 +61,8 @@ const Login: React.FC<{}> = () => {
   }
 
   return (
-    <div className="w-full max-w-xs p-8 space-x-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className="w-full flex flex-col items-center justify-center items-center p-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col md:w-3/6 lg:w-4/12">
         <FormControl invalid={Boolean(errors.email)}>
           <FormLabel>
             Email<RequiredIndicator />
