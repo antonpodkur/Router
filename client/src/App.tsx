@@ -12,6 +12,8 @@ import Login from './pages/Login'
 import AuthMiddleware from './components/AuthMiddleware'
 import Register from './pages/Register'
 import NavBar from './components/NavBar'
+import RequireAuth from './components/RequireAuth'
+import PersonalCabinet from './pages/PersonalCabinet'
 
 function App() {
 
@@ -26,6 +28,9 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path='/map' element={<OpenStreetMap />} />
+              <Route element={<RequireAuth />}> 
+                <Route path='/cabinet' element={<PersonalCabinet/>} />
+              </Route>
               <Route path='*' element={<NotFound />} />
             </Routes>
           </BrowserRouter>

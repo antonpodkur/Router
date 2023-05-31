@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Glide from "@glidejs/glide";
 import { divIcon } from "leaflet";
 import ImageOverlayCard from "../components/ImageOverlayCard";
-import Leaf from '../assets/leaf.png'
+import Leaf from "../assets/leaf.png";
 
 function Welcome() {
   useEffect(() => {
@@ -27,12 +27,13 @@ function Welcome() {
 
   return (
     <div className="relative w-full h-full bg-gradient-to-r from-emerald-100">
-        <div className="absolute bottom-[0px] right-[0px] w-3/6 md:w-auto bg-transparent">
-            <img src={Leaf} alt="leaf" />
-        </div>
+      <div className="absolute bottom-[0px] right-[0px] w-3/6 md:w-auto bg-transparent">
+        <img src={Leaf} alt="leaf" />
+      </div>
       <div className="relative flex flex-col w-full h-[80%] justify-center items-center">
         <div className="m-6 mx-auto text-center text-[35px] md:text-[50px] font-bold">
-          Welcome to Router
+          Welcome to
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-800 to-emerald-500"> Router</span>
         </div>
         <div className="mb-6 mx-auto text-center text-[24px] md:text-[30] font-semibold">
           With Router you can:

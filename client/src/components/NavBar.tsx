@@ -132,7 +132,7 @@ export default function NavbarBasicPreview() {
               {isLoggedIn && (
                 <li role="none" className="flex items-stretch">
                   <Link
-                    to="/"
+                    to="/cabinet"
                     role="menuitem"
                     aria-current="page"
                     aria-haspopup="false"
