@@ -50,6 +50,7 @@ const Login: React.FC<{}> = () => {
       }
     }
     catch (err) {
+      // @ts-ignore
       if (err?.status === 400) {
         setErrMsg('Invalid email or password')
       }

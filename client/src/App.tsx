@@ -14,6 +14,7 @@ import Register from './pages/Register'
 import NavBar from './components/NavBar'
 import RequireAuth from './components/RequireAuth'
 import PersonalCabinet from './pages/PersonalCabinet'
+import About from './pages/About'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
               <Route path='/map' element={<OpenStreetMap />} />
+              <Route path='/about' element={<About/>} />
               <Route element={<RequireAuth />}> 
                 <Route path='/cabinet' element={<PersonalCabinet/>} />
               </Route>

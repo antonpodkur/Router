@@ -144,14 +144,15 @@ export default function NavbarBasicPreview() {
                 </li>
               )}
               <li role="none" className="flex items-stretch">
-                <a
+                <Link
+                  to={"/about"}
                   role="menuitem"
                   aria-haspopup="false"
                   tabIndex={0}
                   className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-8"
                 >
                   <span>About</span>
-                </a>
+                </Link>
               </li>
               {!isLoggedIn && (
                 <li role="none" className="flex items-stretch">
