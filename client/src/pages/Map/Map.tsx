@@ -180,7 +180,7 @@ const OpenStreetMap: React.FC = () => {
                 <div className="search-results items-center">
                 {places.map((item) => {
                   return (
-                    <div className="flex items-center m-2 p-1 border-solid border-2 border-grey-500 rounded-md" key={item?.place_id} onClick={() => setSearchPosition([item?.lat, item?.lon])}>
+                    <div className="flex items-center m-2 p-1 border-solid border-2 shadow-md shadow-slate-200 rounded-md" key={item?.place_id} onClick={() => setSearchPosition([item?.lat, item?.lon])}>
                       <div>
                         <Icon as={MapPin} label="map pin" className="w-6 h-6 mx-3 text-grey-500" />
                       </div>
@@ -224,7 +224,7 @@ const OpenStreetMap: React.FC = () => {
                 </div>
                 <div className="search-results items-center">
                   {routePointTexts.map((item, index) => (
-                      <div className="flex items-center m-2 p-1 border-solid border-2 border-grey-500 rounded-md" key={item?.place_id}>
+                      <div className="flex items-center m-2 p-1 border-solid border-2 shadow-md shadow-slate-200 rounded-md" key={item?.place_id}>
                       <div>
                         <Icon as={Navigation} label="navigation point" className="w-6 h-6 mx-3 text-grey-500" />
                       </div>
@@ -253,7 +253,7 @@ const OpenStreetMap: React.FC = () => {
                   <div className="search-results items-center">
                     {routePointSearchResults.map((item) =>
                       (
-                        <div className="flex items-center m-2 p-1 border-solid border-2 border-grey-500 rounded-md" key={item?.place_id} 
+                        <div className="flex items-center m-2 p-1 border-solid border-2 shadow-md shadow-slate-200 rounded-md" key={item?.place_id} 
                           onClick={() => handleRoutePointSet(item)}>
                           <div>
                             <Icon as={MapPin} label="map pin" className="w-6 h-6 mx-3 text-grey-500" />
