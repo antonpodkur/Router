@@ -15,6 +15,7 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
     const refreshResult = await baseQuery('/api/v1/auth/refresh', api, extraOptions);
     console.log(refreshResult)
     if (refreshResult?.data) {
+      // @ts-ignore
       if (refreshResult.data.status === 'success') {
         api.dispatch(setLoggedIn({}))
         result = await baseQuery(args, api, extraOptions);

@@ -15,7 +15,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
   return (
     <>
       {/*<!-- Component: User profile card --> */}
-      <div className="overflow-hidden rounded bg-white text-center text-slate-500 shadow-md shadow-slate-200">
+      <div className="overflow-hidden rounded bg-white text-center text-slate-500 shadow-md shadow-slate-300">
         {/*  <!-- Image --> */}
         <figure className="p-6 pb-0">
           <span className="relative inline-flex h-20 w-20 items-center justify-center rounded-full text-white">
@@ -32,13 +32,13 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({
         {/*  <!-- Body--> */}
         <div className="p-6">
           <header className="mb-4">
-            <h3 className="text-xl font-medium text-slate-700">
+            <h3 className="text-xl font-bold text-slate-700">
               {username}
             </h3>
-            <p className=" text-slate-400">
+            <p className=" text-slate-600">
                 {email}
             </p>
-            <p className=" text-slate-400">
+            <p className=" text-slate-600">
                 {new Date(registeredAt).toDateString()}
             </p>
           </header>
