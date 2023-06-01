@@ -57,30 +57,35 @@ const PersonalCabinet: React.FC<{}> = () => {
               registeredAt={user!.created_at}
             />
           </div>
-          <div className="col-span-4 lg:col-span-9">
+          <div className="col-span-4 lg:col-span-9 mx-2">
             <div className="text-2xl font-bold">My routes</div>
+            {!routes && <div className="mt-4 text-md font-medium text-slate-800">No routes yet...</div>}
             <ul className="divide-y divide-slate-100">
-              {routes.map((route) => (
-                <li key={route.id} className="flex items-center gap-4 px-4 py-3">
-                  <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center flex-1 overflow-hidden">
-                    <label
-                      className="w-full text-base font-medium truncate cursor-pointer text-slate-800"
-                      htmlFor="id-30a"
-                    >
-                      {route.name}
-                    </label>
-                    <label
-                      className="w-full text-base truncate cursor-pointer text-slate-500"
-                      htmlFor="id-30a"
-                    >
-                      {new Date(route.created_at).toLocaleDateString()}
-                    </label>
-                  </div>
-                  <div className="relative flex flex-wrap items-center">
-                    <RoutesDropdownBasic route={route}/>
-                  </div>
-                </li>
-              ))}
+              {routes &&
+                routes.map((route) => (
+                  <li
+                    key={route.id}
+                    className="flex items-center gap-4 px-4 py-3"
+                  >
+                    <div className="flex flex-col gap-0 min-h-[2rem] items-start justify-center flex-1 overflow-hidden">
+                      <label
+                        className="w-full text-base font-medium truncate cursor-pointer text-slate-800"
+                        htmlFor="id-30a"
+                      >
+                        {route.name}
+                      </label>
+                      <label
+                        className="w-full text-base truncate cursor-pointer text-slate-500"
+                        htmlFor="id-30a"
+                      >
+                        {new Date(route.created_at).toLocaleDateString()}
+                      </label>
+                    </div>
+                    <div className="relative flex flex-wrap items-center">
+                      <RoutesDropdownBasic route={route} fetchRoutes={fetchRoutes}/>
+                    </div>
+                  </li>
+                ))}
             </ul>
           </div>
         </div>

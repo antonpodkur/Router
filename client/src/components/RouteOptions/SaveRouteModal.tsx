@@ -63,6 +63,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
 
     try {
       const result = await axiosPrivate.post('/api/v1/route/', route)
+      handleClose()
     } catch (e) {
       console.log(e)
     }

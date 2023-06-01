@@ -109,3 +109,15 @@ func (u *routeUsecase) Save(route *models.Route) (*models.Route, error) {
 
 	return &newRoute, nil
 }
+
+func (u *routeUsecase) Delete(id string) error {
+	routesCollection := db.OpenCollection(u.mongoClient, "routes")
+	routeId, _ := primitive.ObjectIDFromHex(id)
+
+	_, err := routesCollection.DeleteOne(u.ctx, bson.M{"_id": routeId})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

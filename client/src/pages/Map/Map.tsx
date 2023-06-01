@@ -20,7 +20,7 @@ import LocationService, {
 import { Button, Icon, Input, Divider } from "@vechaiui/react";
 import { Home, Search, XCircle, MapPin, Navigation } from "react-feather";
 import RouteOptions from "../../components/RouteOptions/RouteOptions";
-import { Route as RouteModel } from "../../models/route";
+import { GetRouteStartPoint, Route as RouteModel } from "../../models/route";
 import { useLocation } from "react-router-dom";
 
 interface Position {
@@ -158,7 +158,7 @@ const OpenStreetMap: React.FC = ({}) => {
     setRouteCoords([]);
   };
 
-  let center: [number, number] = [
+  let center: [number, number] = routeStart ?? [
     userLocation!.latitude,
     userLocation!.longitude,
   ];
@@ -383,7 +383,7 @@ const OpenStreetMap: React.FC = ({}) => {
           </div>
         )}
 
-        <CenterMap center={routeStart ?? center} />
+        <CenterMap center={state && state.route ? GetRouteStartPoint(state.route) as LatLng : center} />
         <LocateUser locate={locateUser} />
         <ResetCenterView position={searchPosition} />
         {routeCoords.length > 0 && (

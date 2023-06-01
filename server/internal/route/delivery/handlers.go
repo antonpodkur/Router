@@ -77,3 +77,14 @@ func (h *routeHandlers) Save() gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{"status": "success", "data": newRoute})
 	}
 }
+
+func (h *routeHandlers) Delete() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		routeId := c.Param("routeId")
+		err := h.routeUsecase.Delete(routeId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
+		}
+		c.JSON(http.StatusOK, gin.H{"status": "success"})
+	}
+}

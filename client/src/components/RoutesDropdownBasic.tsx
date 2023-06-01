@@ -1,16 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Route as RouteModel } from "../models/route";
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 interface RoutesDropdownBasicProps {
   route: RouteModel;
+  fetchRoutes: () => void;
 }
 
-const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route}) => {
+const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route, fetchRoutes}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const axiosPrivate = useAxiosPrivate()
+
+
+  const handleDeleteRoute = async () => {
+    const result = await axiosPrivate.delete(`/api/v1/route/${route.id}`)
+    if (result.status !== 200) {
+      console.log(result.data.message)
+    }
+    fetchRoutes()
+  }
+
+  const handleExportRoute = () => {
+    navigator.clipboard.writeText(JSON.stringify(route))
+  }
 
   const navigationItems = [
     {
@@ -23,16 +38,12 @@ const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route}) => {
     {
       name: "Delete",
       link: "/cabinet",
-      handleFunc: () => {
-        console.log("delete");
-      },
+      handleFunc: handleDeleteRoute
     },
     {
       name: "Export",
       link: "/cabinet",
-      handleFunc: () => {
-        console.log("export");
-      },
+      handleFunc: handleExportRoute 
     },
   ];
 

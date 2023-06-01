@@ -12,4 +12,5 @@ func MapRouteRoutes(routeGroup *gin.RouterGroup, h route.Handlers, mw *middlewar
 	routeGroup.GET("/:id", h.GetById())
 	routeGroup.GET("/search/:name", h.GetByName())
 	routeGroup.POST("/", h.Save())
+	routeGroup.DELETE("/:routeId", h.Delete())
 }
