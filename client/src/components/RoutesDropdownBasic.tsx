@@ -1,19 +1,38 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Route as RouteModel } from "../models/route";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const DropdownBasic: React.FC = ({}) => {
+interface RoutesDropdownBasicProps {
+  route: RouteModel;
+}
+
+const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentItem, setCurrentItem] = useState<number>(0);
-  const wrapperRef = useRef<HTMLButtonElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const navigationItems = [
     {
-      linkName: "Open",
+      name: "Open",
+      link: "/map",
+      handleFunc: () => {
+        console.log("Open")
+      },
     },
     {
-      linkName: "Delete",
+      name: "Delete",
+      link: "/cabinet",
+      handleFunc: () => {
+        console.log("delete");
+      },
     },
     {
-      linkName: "Export",
+      name: "Export",
+      link: "/cabinet",
+      handleFunc: () => {
+        console.log("export");
+      },
     },
   ];
 
@@ -26,7 +45,11 @@ const DropdownBasic: React.FC = ({}) => {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      event.preventDefault();
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -71,13 +94,12 @@ const DropdownBasic: React.FC = ({}) => {
   return (
     <>
       {/* <!-- Component: Basic dropdown menu--> */}
-      <div className="relative inline-flex " id="dropdown">
+      <div ref={wrapperRef} className="relative inline-flex " id="dropdown">
         {/*  <!--  Start Dropdown trigger --> */}
         <button
           className="inline-flex items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded whitespace-nowrap bg-emerald-500 hover:bg-emerald-600 focus:bg-emerald-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen ? true : false}
-          ref={wrapperRef}
         >
           <span>Actions</span>
           <span className="relative only:-mx-5">
@@ -111,19 +133,21 @@ const DropdownBasic: React.FC = ({}) => {
           {navigationItems.map((item, index) => {
             return (
               <li key={index}>
-                <a
+                <Link
+                  to={item.link}
+                  onClick={() => item.handleFunc()}
+                  state={{route: route}}
                   className={` ${
                     index === currentItem
                       ? "bg-emerald-50 text-emerald-500"
                       : "bg-none text-slate-500"
                   } flex items-start justify-start gap-2 p-2 px-5 transition-colors duration-300 hover:bg-emerald-50 hover:text-emerald-500 focus:bg-emerald-50 focus:text-emerald-600 focus:outline-none focus-visible:outline-none`}
-                  href="#"
                   aria-current={index + 1 === currentItem ? "page" : "false"}
                 >
                   <span className="flex flex-col gap-1 overflow-hidden whitespace-nowrap">
-                    <span className="leading-5 truncate">{item.linkName}</span>
+                    <span className="leading-5 truncate">{item.name}</span>
                   </span>
-                </a>
+                </Link>
               </li>
             );
           })}
@@ -135,4 +159,4 @@ const DropdownBasic: React.FC = ({}) => {
   );
 };
 
-export default DropdownBasic;
+export default RoutesDropdownBasic;

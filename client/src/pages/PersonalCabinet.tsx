@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import DropdownBasic from "../components/BasicDropdown";
+import RoutesDropdownBasic from "../components/RoutesDropdownBasic";
 import UserProfileCard from "../components/UserProfileCard";
 import { selectUser } from "../features/auth/authSlice";
 import SpinnerBaseSquareHorizontal from "../components/SpinnerBaseSquareHorizontal";
@@ -77,7 +77,7 @@ const PersonalCabinet: React.FC<{}> = () => {
                     </label>
                   </div>
                   <div className="relative flex flex-wrap items-center">
-                    <DropdownBasic />
+                    <RoutesDropdownBasic route={route}/>
                   </div>
                 </li>
               ))}

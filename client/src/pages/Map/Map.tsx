@@ -20,6 +20,8 @@ import LocationService, {
 import { Button, Icon, Input, Divider } from "@vechaiui/react";
 import { Home, Search, XCircle, MapPin, Navigation } from "react-feather";
 import RouteOptions from "../../components/RouteOptions/RouteOptions";
+import { Route as RouteModel } from "../../models/route";
+import { useLocation } from "react-router-dom";
 
 interface Position {
   latitude: number;
@@ -66,7 +68,9 @@ const ResetCenterView: React.FC<{ position: [number, number] | null }> = ({
   return null;
 };
 
-const OpenStreetMap: React.FC = () => {
+const OpenStreetMap: React.FC = ({}) => {
+  const {state} = useLocation();
+  const [routeStart, setRouteStart] = useState<[number, number] | null>(null);
   const [userLocation, setUserLocation] = useState<Position | null>({
     latitude: 50.45007183381818,
     longitude: 30.524225234985355,
@@ -104,6 +108,13 @@ const OpenStreetMap: React.FC = () => {
       console.log(error);
     };
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    
+    console.log(state)
+    if (state && state.route) {
+      setRouteStart([Number(state.route.points[0][1]), Number(state.route.points[0][0])]);
+      setRouteCoords(state.route.coordinates as LatLngExpression[]);
+      console.log(center)
+    }
   }, []);
 
   const handleMapClick = (event: L.LeafletMouseEvent) => {
@@ -147,12 +158,11 @@ const OpenStreetMap: React.FC = () => {
     setRouteCoords([]);
   };
 
-  const center: [number, number] = [
+  let center: [number, number] = [
     userLocation!.latitude,
     userLocation!.longitude,
   ];
 
-  //TODO: move everything to vechai ui
   return (
     <div className="map flex-col md:flex-row">
       <div className="sidebar max-h-[50vh] md:max-h-[100vh] overflow-y-auto p-3 items-center">
@@ -373,7 +383,7 @@ const OpenStreetMap: React.FC = () => {
           </div>
         )}
 
-        <CenterMap center={center} />
+        <CenterMap center={routeStart ?? center} />
         <LocateUser locate={locateUser} />
         <ResetCenterView position={searchPosition} />
         {routeCoords.length > 0 && (
@@ -381,6 +391,14 @@ const OpenStreetMap: React.FC = () => {
             positions={routeCoords}
             pathOptions={{ color: "blue", opacity: 0.9 }}
           />
+        )}
+        {state && state.route && state.route.points.length > 0 && (
+          <div>
+            {state.route.points.map((item: any, index: number) => (
+              <Marker key={index} position={[item[1], item[0]]}>
+              </Marker>
+            ))}
+          </div>
         )}
       </MapContainer>
     </div>
