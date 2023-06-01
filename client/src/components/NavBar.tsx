@@ -1,11 +1,28 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectIsLoggedIn } from "../features/auth/authSlice";
+import { logOut, selectIsLoggedIn } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 export default function NavbarBasicPreview() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const axiosPrivate = useAxiosPrivate();
+  const dispatch = useDispatch();
+
+
+  const handleLogout = async () => {
+    try {
+      const result = await axiosPrivate.get("/api/v1/auth/logout");
+      if (result.status === 200) {
+        dispatch(logOut({}));
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -181,6 +198,21 @@ export default function NavbarBasicPreview() {
                     </button>
                   </Link>
                 </li>
+              )}
+              {isLoggedIn && (
+                <Link
+                  to="/login"
+                  role="menuitem"
+                  aria-current="page"
+                  aria-haspopup="false"
+                  tabIndex={0}
+                  className="flex items-center gap-1 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none px-2"
+                  onClick={async () => await handleLogout()}
+                >
+                  <button className="inline-flex items-center justify-center h-10 gap-1 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
+                    <span>Log Out</span>
+                  </button>
+                </Link>
               )}
             </ul>
           </nav>
