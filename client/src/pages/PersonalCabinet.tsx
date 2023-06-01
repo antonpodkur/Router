@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Route as RouteModel } from "../models/route";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import AlertSimpleDanger from "../components/alerts/AlertSimpleDanger";
+import ImportRouteModal from "../components/ImportRouteModal";
 
 const PersonalCabinet: React.FC<{}> = () => {
   const user = useSelector(selectUser);
@@ -45,7 +46,7 @@ const PersonalCabinet: React.FC<{}> = () => {
   return (
     <section className="flex flex-col items-center">
       {errMsg && <AlertSimpleDanger message={errMsg} />}
-      <div className="container m-8 font-bold text-2xl">
+      <div className="container m-8 font-bold text-2xl text-center md:text-left">
         Welcome back, {user!.name}!
       </div>
       <div className="container m-2">
@@ -58,7 +59,10 @@ const PersonalCabinet: React.FC<{}> = () => {
             />
           </div>
           <div className="col-span-4 lg:col-span-9 mx-2">
-            <div className="text-2xl font-bold">My routes</div>
+            <div className="flex flex-row px-4 justify-between">
+              <div className="text-2xl font-bold text-center md:text-left">My routes</div>
+              <ImportRouteModal fetchRoutes={fetchRoutes}/>
+            </div>
             {!routes && <div className="mt-4 text-md font-medium text-slate-800">No routes yet...</div>}
             <ul className="divide-y divide-slate-100">
               {routes &&
