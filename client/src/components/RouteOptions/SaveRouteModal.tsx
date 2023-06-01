@@ -57,18 +57,12 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
       name: name,
       points: points as Array<Array<string>>,
       coordinates: coords as Array<Array<number>>,
-      createdAt: new Date(),
-      userId: user!.id
+      created_at: new Date(),
+      user_id: user!.id
     }
 
     try {
-      const result = await axiosPrivate.post('/api/v1/route/', {
-        name: route.name,
-        points: route.points,
-        coordinates: route.coordinates,
-        created_at: route.createdAt,
-        user_id: route.userId
-      })
+      const result = await axiosPrivate.post('/api/v1/route/', route)
     } catch (e) {
       console.log(e)
     }

@@ -17,7 +17,6 @@ import LocationService, {
   LngLat,
   Place,
 } from "../../services/LocationService";
-import { Box } from "@mui/material";
 import { Button, Icon, Input, Divider } from "@vechaiui/react";
 import { Home, Search, XCircle, MapPin, Navigation } from "react-feather";
 import RouteOptions from "../../components/RouteOptions/RouteOptions";

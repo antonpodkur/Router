@@ -36,10 +36,9 @@ const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ children }) => {
     setIsLoading(false);
   }, [cookies.logged_in, dispatch])
 
-  // return <>{children}</>
   return (
     <>
-    {isLoading? SpinnerBaseSquareHorizontal: children}
+    {isLoading? <SpinnerBaseSquareHorizontal/>: children}
     </>
   );
 }

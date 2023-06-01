@@ -3,6 +3,6 @@ export interface Route {
   name: string,
   points: Array<Array<string>>,
   coordinates: Array<Array<number>>,
-  createdAt: Date,
-  userId: string
+  created_at: Date,
+  user_id: string
 }
