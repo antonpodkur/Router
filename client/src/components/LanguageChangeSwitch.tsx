@@ -19,7 +19,7 @@ const LanguageChangeSwitch: React.FC = () => {
           className="peer relative h-10 w-full appearance-none rounded border border-slate-200 bg-white px-4 text-sm text-slate-500 outline-none transition-all autofill:bg-white focus:border-emerald-500 focus-visible:outline-none focus:focus-visible:outline-none disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
           onChange={handleLangChange}
         >
-          <option value="en" selected>{t("English")}</option>
+          <option value="en" defaultValue={t("English") as string}>{t("English")}</option>
           <option value="ua">{t("Ukrainian")}</option>
         </select>
         <label

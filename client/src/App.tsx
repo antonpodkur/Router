@@ -28,7 +28,7 @@ function App() {
               <Route path='/' element={<Welcome />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/map' element={<OpenStreetMap route={null}/>} />
+              <Route path='/map' element={<OpenStreetMap/>} />
               <Route path='/about' element={<About/>} />
               <Route element={<RequireAuth />}> 
                 <Route path='/cabinet' element={<PersonalCabinet/>} />

@@ -118,7 +118,7 @@ const resources = {
         "Search for a place": "Пошук місця",
         "Type a place": "Введіть місце",
         "Find": "Знайти",
-        "Build a route": "Побудова маршрут",
+        "Build a route": "Побудова маршруту",
         "Your route": "Ваш маршрут:",
         "Close": "Закрити",
         "Get route": "Отримати маршрут",

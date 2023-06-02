@@ -219,7 +219,7 @@ export default function NavbarBasicPreview() {
                   </Link>
                 </li>
               )}
-              <li>
+              <li role="none" className="flex items-stretch">
                 <LanguageChangeSwitch/>
               </li>
             </ul>
