@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Route as RouteModel } from "../models/route";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import AlertSimpleDanger from "./alerts/AlertSimpleDanger";
+import { useTranslation } from "react-i18next";
 
 interface ImportRouteModalProps {
   fetchRoutes: () => Promise<void>;
@@ -13,6 +14,7 @@ const ImportRouteModal: React.FC<ImportRouteModalProps> = ({ fetchRoutes }) => {
   const [routeStr, setRouteStr] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const axiosPrivate = useAxiosPrivate();
+  const {t, i18n} = useTranslation();
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -113,7 +115,7 @@ const ImportRouteModal: React.FC<ImportRouteModalProps> = ({ fetchRoutes }) => {
         onClick={() => setIsShowing(true)}
         className="inline-flex h-10 items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-emerald-600 focus:bg-emerald-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
       >
-        <span>Import route</span>
+        <span>{t("Import route")}</span>
       </button>
 
       {isShowing && typeof document !== "undefined"
@@ -134,7 +136,7 @@ const ImportRouteModal: React.FC<ImportRouteModalProps> = ({ fetchRoutes }) => {
                 {/*        <!-- Modal header --> */}
                 <header id="header-4a" className="flex items-center">
                   <h3 className="flex-1 text-lg font-medium text-slate-700">
-                    Importing route
+                    {t("Importing route")}
                   </h3>
                   <button
                     onClick={() => setIsShowing(false)}
@@ -184,7 +186,7 @@ const ImportRouteModal: React.FC<ImportRouteModalProps> = ({ fetchRoutes }) => {
                         onChange={hangleRouteStrChange}
                       ></textarea>
                       <label className="absolute left-2 -top-2 z-[1] cursor-text px-2 text-xs text-slate-400 transition-all before:absolute before:top-0 before:left-0 before:z-[-1] before:block before:h-full before:w-full before:bg-white before:transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-required:after:text-pink-500 peer-required:after:content-['\00a0*'] peer-invalid:text-pink-500 peer-focus:-top-2 peer-focus:cursor-default peer-focus:text-xs peer-focus:text-emerald-500 peer-invalid:peer-focus:text-pink-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400 peer-disabled:before:bg-transparent">
-                        Paste your route data here
+                        {t("Paste your route data here")}
                       </label>
                     </div>
                     {/*<!-- End Rounded large size basic textarea --> */}
@@ -196,7 +198,7 @@ const ImportRouteModal: React.FC<ImportRouteModalProps> = ({ fetchRoutes }) => {
                     onClick={async () => hangleImport()}
                     className="inline-flex h-10 w-full items-center justify-center gap-2 whitespace-nowrap rounded bg-emerald-500 px-5 text-sm font-medium tracking-wide text-white transition duration-300 hover:bg-emerald-600 focus:bg-emerald-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none"
                   >
-                    <span>Import</span>
+                    <span>{t("Import")}</span>
                   </button>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useSignUpMutation } from "../features/auth/authApiSlice"
 import { useForm } from "react-hook-form"
 import { FormControl, FormLabel, RequiredIndicator, Input, FormErrorMessage, Button } from "@vechaiui/react"
+import { useTranslation } from "react-i18next"
 
 interface FormData {
   name: string
@@ -15,6 +16,7 @@ interface FormData {
 const Login: React.FC<{}> = () => {
   const [errMsg, setErrMsg] = useState('')
   const navigate = useNavigate()
+  const {t, i18n} = useTranslation()
 
   const [signUp, { isLoading }] = useSignUpMutation()
   const [showPassword, setShowPassword] = useState(false)
@@ -61,40 +63,40 @@ const Login: React.FC<{}> = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col w-11/12 md:w-3/6 lg:w-4/12">
         <FormControl invalid={Boolean(errors.name)}>
           <FormLabel>
-            Name<RequiredIndicator />
+            {t("Name")}<RequiredIndicator />
           </FormLabel>
           <Input
             {...register("name", { required: true })}
-            placeholder="Enter your name."
+            placeholder={t("Enter your name") as string}
           />
           {errors.name && errors.name.type === "required" && <FormErrorMessage>Name is required</FormErrorMessage>}
         </FormControl>
 
         <FormControl invalid={Boolean(errors.email)}>
           <FormLabel>
-            Email<RequiredIndicator />
+            {t("Email")}<RequiredIndicator />
           </FormLabel>
           <Input
             {...register("email", { required: true })}
-            placeholder="Enter your email."
+            placeholder={t("Enter your email") as string}
           />
           {errors.email && errors.email.type === "required" && <FormErrorMessage>Email is required</FormErrorMessage>}
         </FormControl>
 
         <FormControl invalid={Boolean(errors.password)}>
           <FormLabel>
-            Password<RequiredIndicator />
+            {t("Password")}<RequiredIndicator />
           </FormLabel>
           <Input.Group>
             <Input
               className="pr-16"
               type={showPassword ? "text" : "password"}
-              placeholder="Enter password"
+              placeholder={t("Enter password") as string}
               {...register("password", { required: true })}
             />
-            <Input.RightElement className="w-16">
+            <Input.RightElement className="w-16 mr-2">
               <Button type="button" size="xs" variant="solid" onClick={handleToggleShowPassword}>
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? t("Hide") : t("Show")}
               </Button>
             </Input.RightElement>
           </Input.Group>
@@ -103,18 +105,18 @@ const Login: React.FC<{}> = () => {
 
         <FormControl invalid={Boolean(errors.passwordConfirm)}>
           <FormLabel>
-            Repeat password<RequiredIndicator />
+            {t("Repeat password")}<RequiredIndicator />
           </FormLabel>
           <Input.Group>
             <Input
               className="pr-16"
               type={showPasswordConf ? "text" : "password"}
-              placeholder="Repeat password"
+              placeholder={t("Repeat password") as string}
               {...register("passwordConfirm", { required: true })}
             />
-            <Input.RightElement className="w-16">
+            <Input.RightElement className="w-16 mr-2">
               <Button type="button" size="xs" variant="solid" onClick={handleToggleShowPasswordConf}>
-                {showPasswordConf ? "Hide" : "Show"}
+                {showPasswordConf ? t("Hide") : t("Show")}
               </Button>
             </Input.RightElement>
           </Input.Group>
@@ -123,7 +125,7 @@ const Login: React.FC<{}> = () => {
 
         {errMsg !== '' && <FormErrorMessage>{errMsg}</FormErrorMessage>}
 
-        <Button type="submit" variant="solid" color="primary" loading={isLoading}>Submit</Button>
+        <Button type="submit" variant="solid" color="primary" loading={isLoading}>{t("Submit")}</Button>
       </form>
     </div>
   )

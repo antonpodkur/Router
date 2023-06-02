@@ -9,6 +9,7 @@ import { selectUser } from "../../features/auth/authSlice";
 import { useForm } from "react-hook-form";
 import { Route } from "../../models/route";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useTranslation } from "react-i18next";
 
 interface SaveRouteModalProps {
   coords: Array<LatLngExpression>;
@@ -29,6 +30,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
   const [errMsg, setErrMsg] = useState('')
   const user = useSelector(selectUser)
   const axiosPrivate = useAxiosPrivate()
+  const {t, i18n} = useTranslation()
 
   useEffect(() => {
     setErrMsg('')
@@ -97,7 +99,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
             )}
           >
             <header className="relative px-3 pt-3 pb-2 text-lg font-semibold">
-              Save your route
+              {t("Save your route")}
             </header>
             <button
               onClick={handleClose}
@@ -112,11 +114,11 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
             <div className="flex-1 px-3 py-2">
               <FormControl id="name">
                 <FormLabel>
-                  Route name:<RequiredIndicator />
+                  {t("Route name")}:<RequiredIndicator />
                 </FormLabel>
                 <Input
                   color="red"
-                  placeholder="Enter route name"
+                  placeholder={t("Enter route name") as string}
                   onChange={handleNameChange}
                 />
                 {errMsg !== '' && <FormErrorMessage>{errMsg}</FormErrorMessage>}
@@ -133,7 +135,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
                 className="mr-2"
                 onClick={handleClose}
               >
-                Close
+                {t("Close")}
               </Button>
               <Button
                 variant="solid"
@@ -142,7 +144,7 @@ const SaveRouteModal: React.FC<SaveRouteModalProps> = ({
                 className="mr-2"
                 onClick={handleSave}
               >
-                Save
+                {t("Save")}
               </Button>
             </footer>
           </div>

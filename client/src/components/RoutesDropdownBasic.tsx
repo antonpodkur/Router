@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Route as RouteModel } from "../models/route";
 import { Link } from "react-router-dom";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useTranslation } from "react-i18next";
 
 interface RoutesDropdownBasicProps {
   route: RouteModel;
@@ -13,6 +14,7 @@ const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route, fetchRo
   const [currentItem, setCurrentItem] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const axiosPrivate = useAxiosPrivate()
+  const {t, i18n} = useTranslation()
 
 
   const handleDeleteRoute = async () => {
@@ -29,19 +31,19 @@ const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route, fetchRo
 
   const navigationItems = [
     {
-      name: "Open",
+      name: t("Open"),
       link: "/map",
       handleFunc: () => {
         console.log("Open")
       },
     },
     {
-      name: "Delete",
+      name: t("Delete"),
       link: "/cabinet",
       handleFunc: handleDeleteRoute
     },
     {
-      name: "Export",
+      name: t("Export"),
       link: "/cabinet",
       handleFunc: handleExportRoute 
     },
@@ -112,7 +114,7 @@ const RoutesDropdownBasic: React.FC<RoutesDropdownBasicProps> = ({route, fetchRo
           onClick={() => setIsOpen(!isOpen)}
           aria-expanded={isOpen ? true : false}
         >
-          <span>Actions</span>
+          <span>{t("Actions")}</span>
           <span className="relative only:-mx-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"

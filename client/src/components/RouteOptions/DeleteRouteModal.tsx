@@ -13,6 +13,7 @@ import {
 import { Trash2, XCircle } from "react-feather";
 import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useTranslation } from "react-i18next";
 
 interface DeleteRouteModalProps {
   show: boolean;
@@ -25,6 +26,7 @@ const SaveRouteModal: React.FC<DeleteRouteModalProps> = ({
   setShow,
   deleteRoute,
 }) => {
+  const {t, i18n} = useTranslation()
   const handleClose = () => setShow(false);
   const handleDelete = () => {
     deleteRoute();
@@ -58,7 +60,7 @@ const SaveRouteModal: React.FC<DeleteRouteModalProps> = ({
             )}
           >
             <header className="relative px-3 pt-3 pb-2 text-lg font-semibold">
-              Delete your route
+              {t("Delete your route")}
             </header>
             <button
               onClick={handleClose}
@@ -72,8 +74,7 @@ const SaveRouteModal: React.FC<DeleteRouteModalProps> = ({
             />
             <div className="flex-1 px-3 py-2">
               <p className="mb-4 text-sm font-normal text-muted">
-                Route will be deleted, no data will be saved. Do you want to
-                procceed?
+                {t("Route will be deleted")}
               </p>
             </div>
             <Divider
@@ -89,7 +90,7 @@ const SaveRouteModal: React.FC<DeleteRouteModalProps> = ({
                 className="mr-2"
                 onClick={handleClose}
               >
-                Close
+                {t("Close")}
               </Button>
               <Button
                 variant="solid"
@@ -100,7 +101,7 @@ const SaveRouteModal: React.FC<DeleteRouteModalProps> = ({
                 className="mr-2"
                 onClick={handleDelete}
               >
-                Delete
+                {t("Delete")}
               </Button>
             </footer>
           </div>

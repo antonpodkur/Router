@@ -4,8 +4,10 @@ import Glide from "@glidejs/glide";
 import { divIcon } from "leaflet";
 import ImageOverlayCard from "../components/ImageOverlayCard";
 import Leaf from "../assets/leaf.png";
+import { useTranslation } from "react-i18next";
 
 function Welcome() {
+  const {t, i18n} = useTranslation()
   useEffect(() => {
     const slider = new Glide(".glide-05", {
       type: "slider",
@@ -33,11 +35,11 @@ function Welcome() {
       </div>
       <div className="relative flex flex-col w-full h-[80%] justify-center items-center">
         <div className="m-6 mx-auto text-center text-slate-700 text-[35px] md:text-[50px] font-bold">
-          Welcome to
+          {t("Welcome to")}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-800 to-emerald-500"> Router</span>
         </div>
         <div className="mb-6 mx-auto text-center text-slate-700 text-[24px] md:text-[30] font-semibold">
-          With Router you can:
+          {t("With Router you can")}
         </div>
         {/*<!-- Component: Slider with indicators outside --> */}
         <div className="relative w-8/12  lg:w-3/6 glide-05">
@@ -47,25 +49,25 @@ function Welcome() {
               <li>
                 <ImageOverlayCard
                   imageUrl="https://images.pexels.com/photos/4905089/pexels-photo-4905089.jpeg?cs=srgb&dl=pexels-arthouse-studio-4905089.jpg&fm=jpg"
-                  text="Build routes"
+                  text={t("Build routes")}
                 />
               </li>
               <li>
                 <ImageOverlayCard
                   imageUrl="https://images.pexels.com/photos/1051075/pexels-photo-1051075.jpeg?cs=srgb&dl=pexels-element-digital-1051075.jpg&fm=jpg"
-                  text="Access your routes in personal cabinet"
+                  text={t("Access your routes in personal cabinet")}
                 />
               </li>
               <li>
                 <ImageOverlayCard
                   imageUrl="https://images.pexels.com/photos/35969/pexels-photo.jpg?cs=srgb&dl=pexels-ingo-joseph-35969.jpg&fm=jpg"
-                  text="Share routes"
+                  text={t("Share routes")}
                 />
               </li>
               <li>
                 <ImageOverlayCard
                   imageUrl="https://images.pexels.com/photos/793088/pexels-photo-793088.jpeg?cs=srgb&dl=pexels-francesco-paggiaro-793088.jpg&fm=jpg"
-                  text="Export routes"
+                  text={t("Export routes")}
                 />
               </li>
             </ul>

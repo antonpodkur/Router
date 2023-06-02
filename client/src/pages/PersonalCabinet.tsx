@@ -8,9 +8,11 @@ import { Route as RouteModel } from "../models/route";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import AlertSimpleDanger from "../components/alerts/AlertSimpleDanger";
 import ImportRouteModal from "../components/ImportRouteModal";
+import { useTranslation } from "react-i18next";
 
 const PersonalCabinet: React.FC<{}> = () => {
   const user = useSelector(selectUser);
+  const {t, i18n} = useTranslation()
   const [isLoading, setIsLoading] = useState(true);
   const [routes, setRoutes] = useState<RouteModel[]>([]);
   const [errMsg, setErrMsg] = useState<string | null>(null);
@@ -47,7 +49,7 @@ const PersonalCabinet: React.FC<{}> = () => {
     <section className="flex flex-col items-center">
       {errMsg && <AlertSimpleDanger message={errMsg} />}
       <div className="container m-8 font-bold text-2xl text-center md:text-left">
-        Welcome back, {user!.name}!
+        {t("Welcome back")}, {user!.name}!
       </div>
       <div className="container m-2">
         <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
@@ -60,10 +62,10 @@ const PersonalCabinet: React.FC<{}> = () => {
           </div>
           <div className="col-span-4 lg:col-span-9 mx-2">
             <div className="flex flex-row px-4 justify-between">
-              <div className="text-2xl font-bold text-center md:text-left">My routes</div>
+              <div className="text-2xl font-bold text-center md:text-left">{t("My routes")}</div>
               <ImportRouteModal fetchRoutes={fetchRoutes}/>
             </div>
-            {!routes && <div className="mt-4 text-md font-medium text-slate-800">No routes yet...</div>}
+            {!routes && <div className="mt-4 text-md font-medium text-slate-800">{t("No routes yet")}</div>}
             <ul className="divide-y divide-slate-100">
               {routes &&
                 routes.map((route) => (

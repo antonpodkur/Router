@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useTransition } from "react";
 import {
   MapContainer,
   Marker,
@@ -22,6 +22,7 @@ import { Home, Search, XCircle, MapPin, Navigation } from "react-feather";
 import RouteOptions from "../../components/RouteOptions/RouteOptions";
 import { GetRouteStartPoint, Route as RouteModel } from "../../models/route";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface Position {
   latitude: number;
@@ -69,6 +70,7 @@ const ResetCenterView: React.FC<{ position: [number, number] | null }> = ({
 };
 
 const OpenStreetMap: React.FC = ({}) => {
+  const {t, i18n} = useTranslation()
   const {state} = useLocation();
   const [routeStart, setRouteStart] = useState<[number, number] | null>(null);
   const [userLocation, setUserLocation] = useState<Position | null>({
@@ -173,7 +175,7 @@ const OpenStreetMap: React.FC = ({}) => {
             leftIcon={<Icon as={Home} label="home" className="w-4 h-4 mr-1" />}
             className="mb-2"
           >
-            Home
+            {t("Home")}
           </Button>
           <Divider
             orientation="horizontal"
@@ -184,13 +186,13 @@ const OpenStreetMap: React.FC = ({}) => {
         {/* search place */}
         <div className="m-3 w-full flex flex-col items-center w-full">
           <div className="w-full font-bold text-center m-2">
-            Search for a place
+            {t("Search for a place")}
           </div>
           <div className="container">
             <div className="search-box flex-col md:flex-row ">
               <Input
                 className="mb-1 md:mr-1"
-                placeholder="Type a place"
+                placeholder={t("Type a place") as string}
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
               />
@@ -203,7 +205,7 @@ const OpenStreetMap: React.FC = ({}) => {
                   <Icon as={Search} label="search" className="w-4 h-4 mr-1" />
                 }
               >
-                Find
+                {t("Find")}
               </Button>
             </div>
 
@@ -238,7 +240,7 @@ const OpenStreetMap: React.FC = ({}) => {
                     <Icon as={XCircle} label="close" className="w-4 h-4 mr-1" />
                   }
                 >
-                  Close
+                  {t("Close")}
                 </Button>
               </div>
             )}
@@ -251,13 +253,13 @@ const OpenStreetMap: React.FC = ({}) => {
 
         {/* routes */}
         <div className="m-3 w-full flex flex-col items-center">
-          <div className="w-full font-bold text-center m-2">Build a route</div>
+          <div className="w-full font-bold text-center m-2">{t("Build a route")}</div>
 
           <div className="container flex flex-col">
             {routePointTexts.length > 0 && (
               <div>
                 <div className="flex items-center justify-center">
-                  <div className="text-center font-medium">Your route:</div>
+                  <div className="text-center font-medium">{t("Your route")}</div>
                 </div>
                 <div className="search-results items-center">
                   {routePointTexts.map((item, index) => (
@@ -289,7 +291,7 @@ const OpenStreetMap: React.FC = ({}) => {
             <div className="search-box flex-col md:flex-row">
               <Input
                 className="mb-1 md:mr-1"
-                placeholder="Type a place"
+                placeholder={t("Type a place") as string}
                 value={routePointsSearchText}
                 onChange={(e) => setRoutePointsSearchText(e.target.value)}
               />
@@ -302,7 +304,7 @@ const OpenStreetMap: React.FC = ({}) => {
                   <Icon as={Search} label="search" className="w-4 h-4 mr-1" />
                 }
               >
-                Find
+                {t("Find")}
               </Button>{" "}
             </div>
 
@@ -333,7 +335,7 @@ const OpenStreetMap: React.FC = ({}) => {
                     <Icon as={XCircle} label="close" className="w-4 h-4 mr-1" />
                   }
                 >
-                  Close
+                  {t("Close")}
                 </Button>
               </div>
             )}
@@ -343,7 +345,7 @@ const OpenStreetMap: React.FC = ({}) => {
                 variant="solid"
                 onClick={async () => await CalculateRoute()}
               >
-                Get route
+                {t("Get route")}
               </Button>
             )}
           </div>

@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import { logOut, selectIsLoggedIn } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import { useTranslation } from 'react-i18next'
+import LanguageChangeSwitch from "./LanguageChangeSwitch";
 
 export default function NavbarBasicPreview() {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const axiosPrivate = useAxiosPrivate();
   const dispatch = useDispatch();
+  const {t, i18n} = useTranslation();
 
 
   const handleLogout = async () => {
@@ -143,7 +146,7 @@ export default function NavbarBasicPreview() {
                   tabIndex={0}
                   className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-8"
                 >
-                  <span>Map</span>
+                  <span>{t("Map")}</span>
                 </Link>
               </li>
               {isLoggedIn && (
@@ -156,7 +159,7 @@ export default function NavbarBasicPreview() {
                     tabIndex={0}
                     className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-8"
                   >
-                    <span>Personal Cabinet</span>
+                    <span>{t("Personal Cabinet")}</span>
                   </Link>
                 </li>
               )}
@@ -168,7 +171,7 @@ export default function NavbarBasicPreview() {
                   tabIndex={0}
                   className="flex items-center gap-2 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-8"
                 >
-                  <span>About</span>
+                  <span>{t("About")}</span>
                 </Link>
               </li>
               {!isLoggedIn && (
@@ -182,7 +185,7 @@ export default function NavbarBasicPreview() {
                     className="flex items-center gap-1 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none lg:px-2"
                   >
                     <button className="inline-flex items-center justify-center h-10 gap-1 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
-                      <span>Sign Up</span>
+                      <span>{t("Sign Up")}</span>
                     </button>
                   </Link>
                   <Link
@@ -194,26 +197,31 @@ export default function NavbarBasicPreview() {
                     className="flex items-center gap-1 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none px-2"
                   >
                     <button className="inline-flex items-center justify-center h-10 gap-1 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
-                      <span>Sign In</span>
+                      <span>{t("Sign In")}</span>
                     </button>
                   </Link>
                 </li>
               )}
               {isLoggedIn && (
-                <Link
-                  to="/login"
-                  role="menuitem"
-                  aria-current="page"
-                  aria-haspopup="false"
-                  tabIndex={0}
-                  className="flex items-center gap-1 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none px-2"
-                  onClick={async () => await handleLogout()}
-                >
-                  <button className="inline-flex items-center justify-center h-10 gap-1 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
-                    <span>Log Out</span>
-                  </button>
-                </Link>
+                <li>
+                  <Link
+                    to="/login"
+                    role="menuitem"
+                    aria-current="page"
+                    aria-haspopup="false"
+                    tabIndex={0}
+                    className="flex items-center gap-1 py-4 transition-colors duration-300 hover:text-emerald-500 focus:bg-emerald-50 focus:outline-none focus-visible:outline-none px-2"
+                    onClick={async () => await handleLogout()}
+                  >
+                    <button className="inline-flex items-center justify-center h-10 gap-1 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded shadow-md focus-visible:outline-none whitespace-nowrap bg-emerald-500 shadow-emerald-200 hover:bg-emerald-600 hover:shadow-sm hover:shadow-emerald-200 focus:bg-emerald-700 focus:shadow-sm focus:shadow-emerald-200 disabled:cursor-not-allowed disabled:border-emerald-300 disabled:bg-emerald-300 disabled:shadow-none">
+                      <span>{t("Log Out")}</span>
+                    </button>
+                  </Link>
+                </li>
               )}
+              <li>
+                <LanguageChangeSwitch/>
+              </li>
             </ul>
           </nav>
         </div>
