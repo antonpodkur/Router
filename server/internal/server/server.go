@@ -28,7 +28,7 @@ func (s *Server) Run() {
 		log.Panic(err)
 	}
 
-	if err := s.engine.Run(":4000"); err != nil {
+	if err := s.engine.Run(":" + s.cfg.Server.Port); err != nil {
 		log.Panic(err)
 	}
 
